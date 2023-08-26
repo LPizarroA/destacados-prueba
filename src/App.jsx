@@ -8,6 +8,8 @@ import InfoChar from './components/InfoChar'
 import './styles/appStyle.scss'
 
 import { Button, Col, Form, Row } from 'react-bootstrap'
+import { ThreeCircles } from 'react-loader-spinner'
+import ScrollToTop from "react-scroll-to-top";
 
 function App() {
   const toggle = useToggle(false)
@@ -29,10 +31,12 @@ function App() {
   }, [active])
 
   // filtrar según el estado y especie
-  function filter() {
+  function filter() {    
+    // setMensaje=('')
     let aux = backUp
     let array = aux.filter(data => selStatus ? (data.status == selStatus) : (data.status !== null))
       .filter(data => selEspecie ? (data.species == selEspecie) : (data.species !== null))
+      setMensaje('')
     if (array.length == 0) {
       setMensaje('No se encontraron coincidencias')
     }
@@ -56,7 +60,7 @@ function App() {
     let result = [...limpio]
     setEspecie(result.sort())
   }
-
+  // Buscar el estatus 
   function findStatus(data) {
     let aux = []
     data.map(data => {
@@ -123,50 +127,96 @@ function App() {
       })
   }
 
-  return (
+  return toggle.active ? (
     <Row className='mainRow'>
-      <Form.Select value={selStatus} onChange={(e) => setSelStatus(e.target.value)} aria-label='Status'>
-        <option>Status</option>
-        {
-          status.map((data, index) =>
-            <option key={index} value={data}>{data}</option>
-          )
-        }
-      </Form.Select>
-      <Form.Select value={selEspecie} onChange={(e) => setSelEspecie(e.target.value)} aria-label='Species'>
-        <option>Species</option>
-        {
-          especie.map((data, index) =>
-            <option key={index} value={data}>{data}</option>
-          )
-        }
-      </Form.Select>
-      <Button onClick={() => filter()}>Buscar</Button>
-      <Button onClick={() => limpiar()}>Limpiar</Button>
+      <ScrollToTop className='upArrow' smooth color="#050505" />
+      <Col className='colForm' xs={12}>
+        <Row>
+          <Col xs={12} sm={6} md={4}>
+            <Form.Select className='formSelect' value={selStatus} onChange={(e) => setSelStatus(e.target.value)} aria-label='Status'>
+              <option>Status</option>
+              {
+                status.map((data, index) =>
+                  <option key={index} value={data}>{data}</option>
+                )
+              }
+            </Form.Select>
+          </Col>
+          <Col xs={12} sm={6} md={4}>
+            <Form.Select value={selEspecie} onChange={(e) => setSelEspecie(e.target.value)} aria-label='Species'>
+              <option>Species</option>
+              {
+                especie.map((data, index) =>
+                  <option key={index} value={data}>{data}</option>
+                )
+              }
+            </Form.Select>
+          </Col>
+          <Col xs={12} sm={12} md={4}>
+            <Row className='rowFilterButton'>
+              <Col>
+                <Button className='buttonNav' variant="info"  onClick={() => filter()}>Search</Button>
+              </Col>
+              <Col>
+                <Button className='buttonNav' variant="warning" onClick={() => limpiar()}>Clean</Button>
+              </Col>
+            </Row>
 
-      {
-        page.prev ? (
-          <button onClick={(e) => anterior()}>Anterior</button>
-        ) : null
-      }
-      {
-        page.next ? (
-          <button onClick={(e) => siguiente()}>Siguiente</button>
-        ) : null
-      }
-        <Row className='rowCard'>
-      {
-        toggle.active ? (
-          info.map((data, index) =>
+          </Col>
+        </Row>
+        <Row className='rowNav'>
+          <Col className='colNav1'>
+            {
+              page.prev ? (
+                <Button className='buttonNav' variant="dark" onClick={(e) => { anterior(); limpiar() }}>Previous</Button>
+              ) : null
+            }
+
+          </Col>
+          <Col className='colNav2'>
+            {
+              page.next ? (
+                <Button className='buttonNav' variant="dark" onClick={(e) => { siguiente(); limpiar() }}>Next</Button>
+              ) : null
+            }
+
+          </Col>
+        </Row>
+
+      </Col>
+
+
+      <Row className='rowCard'>
+        <div className='mensajeFilter'>{mensaje}</div>
+        {
+          toggle.active ? (
+            info.map((data, index) =>
 
               <Col xs={12} sm={6} md={6} lg={3} className='colChar' key={data.id} >
                 <InfoChar data={data}></InfoChar>
               </Col>
+            )
+          ) : (
+            <div>Loading...</div>
           )
-          ) : (<h1>Loading...</h1>)
         }
-        </Row>
+      </Row>
     </Row>
+  ) : (
+    <div className='loadingSpinner'>
+      <ThreeCircles
+        height="100"
+        width="100"
+        color="#4fa94d"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+        ariaLabel="three-circles-rotating"
+        outerCircleColor=""
+        innerCircleColor=""
+        middleCircleColor=""
+      />
+    </div>
   )
 }
 

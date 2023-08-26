@@ -1,15 +1,62 @@
-.mainRow{
+.mainRow{    
     display: flex;
+    justify-self: center;
     justify-content: center;
+    margin-top: 20px !important;
 }
 .colChar{
     // 
 }
-.rowCard{
+.rowCard{    
+    border-top: solid 1px #e9ecef;
     padding-right: 0px !important;
     padding-left:0px !important;
 }
 .row{
     padding-right: 0px !important;
     padding-left: 0px !important;
+}
+.colForm{
+    padding: 0 22px !important;
+}
+.buttonNav{
+    width: 100%;
+    max-width: 250px;
+    @media (max-width: 575px) {
+        width: 100%;        
+    }
+    
+}
+.rowNav{
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;    
+}
+.rowFilterButton{
+    @media (max-width: 767px) {
+        margin-top: 10px !important;        
+    }
+}
+
+@media (min-width:768px) {
+    .colNav2{
+        text-align: end !important;        
+    }
+    .colNav1{
+        text-align: start;
+    }
+}
+.loadingSpinner{
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+.mensajeFilter{
+    font-size: larger;
+}
+.upArrow{
+    background-color: #ffc107 !important;
+    border-radius: 25px !important;
+    padding: 7px !important;
+
 }

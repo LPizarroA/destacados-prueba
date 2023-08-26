@@ -1,10 +1,18 @@
 .cardChar{
     padding: 1em 1em;
-    margin: 10px 10px;
-    height: 95% !important;
+    margin: 15px 10px;
+    height: 97% !important;
+    background-color: #2c3154 !important;
+    border-radius: 20px !important;
+}
+.cardTitle{
+    color: white !important;
 }
 .divChar{
     height: 100% !important;
+}
+.modal-content{
+    background-color: #ebedff !important;
 }
 .cardFooter{
     background-color: transparent !important;

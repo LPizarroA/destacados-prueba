@@ -10,12 +10,13 @@ const InfoChar = (props) => {
       <Card className="cardChar">
         <Card.Img variant="top" src={data.image} />
         <Card.Body>
-          <Card.Title>{data.name}</Card.Title>
+          <Card.Title className="cardTitle">{data.name}</Card.Title>
         </Card.Body>
         <Card.Footer className="cardFooter">
-          <Button variant="primary" onClick={() => toggleTrue()}>Show more...</Button>
+          <Button variant="light" onClick={() => toggleTrue()}>Show more...</Button>
         </Card.Footer>
       </Card>
+
       {
         active &&
         <Modal
@@ -23,6 +24,7 @@ const InfoChar = (props) => {
           onHide={() => toggleFalse()}
           dialogClassName="modal-90w"
           aria-labelledby="example-custom-modal-styling-title"
+          className="modalChar"
         >
           <Modal.Header closeButton>
             <Modal.Title id="example-custom-modal-styling-title">
