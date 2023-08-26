@@ -1,8 +1,22 @@
-# React + Vite
+# Prueba tecnica
+Prueba técnica: https://github.com/marianodtk2/prueba-frontend/tree/main
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Descripción:
+Aplicación frontend desarrollada en React. Se cubre la necesidad de consumir una API, mostrarla al usuario y permitirle navegar por el contenido, además de aplicar filtros a los datos rescatados de la API. Se realiza el diseño responsivo, intuitivo y amigable para el usuario.
 
-Currently, two official plugins are available:
+Tecnologías/librerías usadas en el proyecto:
+- React
+- Bootstrap
+- Sass
+- react-loader-spinner
+- react-scroll-to-top
+- vite
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Project Setup
+npm install
+
+Compiles and hot-reloads for development
+npm run dev
+
+Compiles and minifies for production
+npm run build
