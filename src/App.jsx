@@ -5,8 +5,9 @@ import useToggle from './hooks/useToggle'
 import useApi from './hooks/useApi'
 import { global } from './variables/global'
 import InfoChar from './components/InfoChar'
+import './styles/appStyle.scss'
 
-import { Button, Form } from 'react-bootstrap'
+import { Button, Col, Form, Row } from 'react-bootstrap'
 
 function App() {
   const toggle = useToggle(false)
@@ -27,18 +28,18 @@ function App() {
     }
   }, [active])
 
-// filtrar según el estado y especie
+  // filtrar según el estado y especie
   function filter() {
     let aux = backUp
-    let array = aux.filter(data => data.status == selStatus)
-      .filter(data => data.species == selEspecie)
+    let array = aux.filter(data => selStatus ? (data.status == selStatus) : (data.status !== null))
+      .filter(data => selEspecie ? (data.species == selEspecie) : (data.species !== null))
     if (array.length == 0) {
       setMensaje('No se encontraron coincidencias')
     }
     setInfo(array)
   }
   // limpiar filtros
-  function limpiar(){    
+  function limpiar() {
     setInfo(backUp)
     setSelEspecie('')
     setSelStatus('')
@@ -123,7 +124,7 @@ function App() {
   }
 
   return (
-    <div>
+    <Row className='mainRow'>
       <Form.Select value={selStatus} onChange={(e) => setSelStatus(e.target.value)} aria-label='Status'>
         <option>Status</option>
         {
@@ -153,14 +154,19 @@ function App() {
           <button onClick={(e) => siguiente()}>Siguiente</button>
         ) : null
       }
+        <Row className='rowCard'>
       {
         toggle.active ? (
           info.map((data, index) =>
-            <InfoChar key={data.id} data={data}></InfoChar>
+
+              <Col xs={12} sm={6} md={6} lg={3} className='colChar' key={data.id} >
+                <InfoChar data={data}></InfoChar>
+              </Col>
           )
-        ) : (<h1>Loading...</h1>)
-      }
-    </div>
+          ) : (<h1>Loading...</h1>)
+        }
+        </Row>
+    </Row>
   )
 }
 
