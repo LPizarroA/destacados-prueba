@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
 import useToggle from "./useToggle"
 
-const useApi = ({ url }) => {
+const useApi = ( url ) => {
 
-    const { active, toggleFalse } = useToggle(true)
+    const { active, toggleFalse, toggleTrue } = useToggle(true)
     const [data, setData] = useState()
 
-    async function consume() {
+    async function consume(url) {
+        toggleTrue()
         await fetch(url)
             .then(res => res.json())
             .then(re => {
@@ -16,9 +17,9 @@ const useApi = ({ url }) => {
             )
     }
     useEffect(() => {
-        consume()
+        consume(url)
     }, [])
-    return { data, active }
+    return { data, active, consume }
 }
 
 export default useApi
