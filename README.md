@@ -12,11 +12,17 @@ Tecnologías/librerías usadas en el proyecto:
 - react-scroll-to-top
 - vite
 
-Project Setup
+## Project setup
+```una vez clonado, hacer el comando siguiente
 npm install
+```
 
-Compiles and hot-reloads for development
+### Compiles and hot-reloads for development
+```para iniciar el servidor, ejecutar este comando
 npm run dev
+```
 
-Compiles and minifies for production
+### Compiles and minifies for production
+```para compilar el proyecto  utilice el comando siguiente
 npm run build
+```
