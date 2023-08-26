@@ -6,10 +6,17 @@ import useApi from './hooks/useApi'
 import { global } from './variables/global'
 import InfoChar from './components/InfoChar'
 import './styles/appStyle.scss'
-
 import { Button, Col, Form, Row } from 'react-bootstrap'
 import { ThreeCircles } from 'react-loader-spinner'
 import ScrollToTop from "react-scroll-to-top";
+/*
+-Utilice la herramienta de bootstrap, ya que, los componentes que provee son amigables al trabar con ellos al tener
+una buena documentación y permite generar una vista responsiva.
+-En cuanto a le herramienta Sass, la utilice como complemento de css, ya que, me permite manejar mas cómodamente
+los puntos de quiebre y asi mejorar la vista responsiva, ademas de, tener buena documentación para su uso.
+-Los paquetes de react-scroll-to-top y react-loader-spinner los utilice para mejorar detalles concretos
+para la vista y el funcionamiento mas cómodo para el usuario.
+*/
 
 function App() {
   const toggle = useToggle(false)
@@ -30,14 +37,14 @@ function App() {
     }
   }, [active])
 
-  // filtrar según el estado y especie
-  function filter() {    
-    // setMensaje=('')
+  // filtrar según el estado y especie, también se considera el caso de que solo quiera buscar uno solo.
+  function filter() {
     let aux = backUp
     let array = aux.filter(data => selStatus ? (data.status == selStatus) : (data.status !== null))
       .filter(data => selEspecie ? (data.species == selEspecie) : (data.species !== null))
       setMensaje('')
     if (array.length == 0) {
+      // mensaje el cual indicara al usuario que los filtros seleccionados no arrojaron coincidencias
       setMensaje('No se encontraron coincidencias')
     }
     setInfo(array)
@@ -49,28 +56,35 @@ function App() {
     setSelStatus('')
   }
 
-  // obtener la especie 
+  // obtener la especie desde la data principal, asi crear un array con todos los tipos de especie
+  // de la respuesta, sin la necesidad de conocer cada uno de los tipos de especie.
   function spec(data) {
     let aux = []
     data.map(data => {
       aux.push(data.species)
     })
-    // Set solo permite almacenar valores únicos
+    // Set solo permite almacenar valores únicos por lo que descarta los repetidos y se queda con la
+    // primera coincidencia
     const limpio = new Set(aux)
     let result = [...limpio]
     setEspecie(result.sort())
   }
-  // Buscar el estatus 
+
+
+  // obtener el estatus desde la data principal, asi crear un array con todos los tipos de status
+  // de la respuesta, sin la necesidad de conocer cada uno de los tipos de status.
   function findStatus(data) {
     let aux = []
     data.map(data => {
       aux.push(data.status)
     })
-    // Set solo permite almacenar valores únicos
+    // Set solo permite almacenar valores únicos por lo que descarta los repetidos y se queda con la
+    // primera coincidencia
     const limpio = new Set(aux)
     let result = [...limpio]
     setStatus(result.sort())
   }
+
 
   // LLamada por defecto API    
   async function apiCall(url) {
@@ -79,6 +93,7 @@ function App() {
     if (!active) {
       spec(data.results)
       findStatus(data.results)
+      // ordeno los resultados de la respuesta por abecedario
       setInfo(data.results.sort((a, b) => a.name.localeCompare(b.name)))
       setBackUp(data.results.sort((a, b) => a.name.localeCompare(b.name)))
       setPage({
@@ -96,7 +111,6 @@ function App() {
       .then(res => res.json())
       .then(data => {
         spec(data.results)
-
         findStatus(data.results)
         setInfo(data.results.sort((a, b) => a.name.localeCompare(b.name)))
         setBackUp(data.results.sort((a, b) => a.name.localeCompare(b.name)))
@@ -115,7 +129,6 @@ function App() {
       .then(res => res.json())
       .then(data => {
         spec(data.results)
-
         findStatus(data.results)
         setInfo(data.results.sort((a, b) => a.name.localeCompare(b.name)))
         setBackUp(data.results.sort((a, b) => a.name.localeCompare(b.name)))
@@ -127,6 +140,12 @@ function App() {
       })
   }
 
+  // Comparo toggle.active, ya que, este me permite controlar las llamadas asíncronas y en caso de estar
+  // esperando la promesa lanzar aun loader al usuario y asi no ver "contenido en blanco"
+
+  // Utilizo bastante los grid container de Bootstrap Row y Col, ya que, me permite manejar y hacerme una
+  // imagen mental previa de como quedara en disposición el contenido y su vista responsiva.
+  
   return toggle.active ? (
     <Row className='mainRow'>
       <ScrollToTop className='upArrow' smooth color="#050505" />

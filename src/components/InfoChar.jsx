@@ -2,6 +2,9 @@ import { Button, Card, Col, Modal, ModalFooter, Row } from "react-bootstrap"
 import useToggle from "../hooks/useToggle"
 import '../styles/infoCharStyle.scss'
 
+// Este componente es el que se itera para mostrar los datos de la api, desde el componente
+// padre le pase los datos por props para ser renderizado en el componente hijo.
+
 const InfoChar = (props) => {
   const { data } = props
   const { active, toggleFalse, toggleTrue } = useToggle(false)

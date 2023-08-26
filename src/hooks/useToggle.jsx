@@ -1,4 +1,5 @@
 import {useState} from 'react'
+// custom hook que maneja estado simple de true o false
 
 const useToggle = (val=false) => {
   const [active, setActive]= useState(val)
